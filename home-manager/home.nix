@@ -82,7 +82,12 @@
     htop
     btop
 
+    unzip
     dnsutils
+
+    # for neovim
+    python3
+    nodejs
   ];
 
   # Enable home-manager and git

@@ -22,7 +22,3 @@ lspconfig.tsserver.setup {
   capabilities = capabilities,
 }
 
--- elixir
-lspconfig.elixirls.setup {
-  cmd = { "elixir-ls" };
-}
