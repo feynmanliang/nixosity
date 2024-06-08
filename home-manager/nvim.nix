@@ -12,9 +12,11 @@
 
   xdg.configFile."nvim".source = pkgs.stdenv.mkDerivation {
     name = "NvChad";
-    src = builtins.fetchGit {
-      url = "https://github.com/NvChad/NvChad.git";
-      rev = "164e8cc7fcb9006a1edd4ddfc98bf8c7f4fe2e0d";
+    src = pkgs.fetchFromGitHub {
+      owner = "NvChad";
+      repo = "starter";
+      rev = "aad624221adc6ed4e14337b3b3f2b74136696b53";
+      hash = "sha256-2HNqPdnIVkX+d5OxjsRbL3SoY8l5Ey7/Y274Pi5uZW4=";
     };
     installPhase = ''
       mkdir -p $out
