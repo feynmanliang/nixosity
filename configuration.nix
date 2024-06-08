@@ -8,6 +8,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  networking.hostName = "sextant";
+
   wsl.enable = true;
   wsl.defaultUser = "nixos";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
