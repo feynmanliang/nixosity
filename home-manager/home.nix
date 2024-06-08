@@ -12,7 +12,7 @@
     # inputs.nix-colors.homeManagerModule
 
     # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./nvim.nix
   ];
 
   nixpkgs = {
@@ -66,8 +66,6 @@
       userName = "Feynman Liang";
       userEmail = "feynman.liang@gmail.com";
     };
-
-    neovim.enable = true;
 
     starship.enable = true;
   };
