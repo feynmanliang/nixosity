@@ -77,7 +77,7 @@
     jq
     yq-go
 
-    btop
+    htop
     dnsutils
   ];
 
