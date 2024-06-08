@@ -22,3 +22,18 @@ lspconfig.tsserver.setup {
   capabilities = capabilities,
 }
 
+-- elixir
+lspconfig.nextls.setup {
+  cmd = { "nextls", "--stdio" },
+  init_options = {
+    extensions = {
+      credo = { enable = true }
+    },
+    experimental = {
+      completions = { enable = true }
+    }
+  },
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+}
