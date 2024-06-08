@@ -1,5 +1,5 @@
 {
-  description = "A simple NixOS flake";
+  description = "Your new nix config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -10,22 +10,37 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, home-manager }: {
-    nixosConfigurations."sextant" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        nixos-wsl.nixosModules.wsl
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.nixos = import ./home.nix;
+  outputs =
+    { self
+    , nixpkgs
+    , nixos-wsl
+    , home-manager
+    , ...
+    } @ inputs:
+    let
+      inherit (self) outputs;
+    in
+    {
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#your-hostname'
+      nixosConfigurations = {
+        sextant = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          system = "x86_64-linux";
+          # > Our main nixos configuration file <
+          modules = [
+            ./nixos/configuration.nix
+            nixos-wsl.nixosModules.wsl
+            home-manager.nixosModules.home-manager
+            {
+              # home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.nixos = import ./home-manager/home.nix;
 
-          # Optionally, use home-manager.extraSpecialArgs to pass
-          # arguments to home.nix
-        }
-      ];
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+            }
+          ];
+        };
+      };
     };
-  };
 }
