@@ -67,6 +67,8 @@
       userEmail = "feynman.liang@gmail.com";
     };
 
+    k9s.enable = true;
+
     starship.enable = true;
   };
 
