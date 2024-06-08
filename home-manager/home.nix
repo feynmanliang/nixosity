@@ -80,6 +80,8 @@
     yq-go
 
     htop
+    btop
+
     dnsutils
   ];
 
