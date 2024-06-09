@@ -70,12 +70,18 @@
     k9s.enable = true;
 
     starship.enable = true;
+
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+    };
   };
 
   home.packages = with pkgs; [
     nixpkgs-fmt
 
     kubectl
+    ripgrep
     jq
     yq-go
 

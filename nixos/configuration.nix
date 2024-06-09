@@ -94,6 +94,16 @@
     package = pkgs.nix-ld-rs;
   };
 
+  # docker
+  users.users."nixos".extraGroups = [ "docker" ];
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }

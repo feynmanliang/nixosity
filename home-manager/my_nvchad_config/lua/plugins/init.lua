@@ -22,7 +22,7 @@ return {
       ensure_installed = {
         "lua-language-server", "stylua",
         "html-lsp", "css-lsp" , "prettier",
-        "nextls"
+        "nextls", "terraform-ls"
       },
     },
   },
@@ -32,7 +32,9 @@ return {
     opts = {
       ensure_installed = {
         "vim", "lua", "vimdoc",
-        "html", "css", "elixir"
+        "html", "css", "elixir",
+        "heex", "terraform",
+        "tsx"
       },
     },
   },
@@ -40,5 +42,20 @@ return {
   {
     'numToStr/Comment.nvim',
     lazy = false,
+    config = function()
+      require("Comment").setup({})
+    end,
+  },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        panel = { enabled = false },
+        suggestion = { auto_trigger = true },
+      })
+    end,
   },
 }
