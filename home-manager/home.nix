@@ -4,22 +4,14 @@
 , lib
 , config
 , pkgs
+, neovim-nightly-overlay
 , ...
 }: {
-  # You can import other home-manager modules here
-  imports = [
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-
-    ./nvim.nix
-    ./tmux.nix
-  ];
-
   nixpkgs = {
     # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
+      neovim-nightly-overlay.overlays.default
 
       # Or define it inline, for example:
       # (final: prev: {
@@ -36,6 +28,16 @@
       allowUnfreePredicate = _: true;
     };
   };
+
+  # You can import other home-manager modules here
+  imports = [
+    # If you want to use home-manager modules from other flakes (such as nix-colors):
+    # inputs.nix-colors.homeManagerModule
+
+    ./nvim.nix
+    ./tmux.nix
+  ];
+
 
   home = {
     username = "nixos";

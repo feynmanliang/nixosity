@@ -8,6 +8,7 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs =
@@ -15,6 +16,7 @@
     , nixpkgs
     , nixos-wsl
     , home-manager
+    , neovim-nightly-overlay
     , ...
     } @ inputs:
     let
@@ -38,6 +40,9 @@
               home-manager.users.nixos = import ./home-manager/home.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+              home-manager.extraSpecialArgs = {
+                inherit (inputs) nixpkgs neovim-nightly-overlay;
+              };
             }
           ];
         };
