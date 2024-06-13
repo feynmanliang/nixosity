@@ -17,6 +17,7 @@
           '';
         }
         tmuxPlugins.pain-control
+        tmuxPlugins.sensible
         tmuxPlugins.yank
         # needs to be after right status edits, see https://haseebmajid.dev/posts/2023-07-10-setting-up-tmux-with-nix-home-manager/
         {
