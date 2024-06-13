@@ -22,7 +22,8 @@ return {
       ensure_installed = {
         "lua-language-server", "stylua",
         "html-lsp", "css-lsp" , "prettier",
-        "nextls", "terraform-ls", "yaml-language-server"
+        "nextls", "terraform-ls", "yaml-language-server",
+        "deno"
       },
     },
   },
