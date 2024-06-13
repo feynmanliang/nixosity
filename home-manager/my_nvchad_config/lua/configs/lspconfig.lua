@@ -59,18 +59,23 @@ lspconfig.nextls.setup {
   capabilities = capabilities,
 }
 
--- yamlls
+-- yamlls with schemastore
 lspconfig.yamlls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
   settings = {
     yaml = {
-      schemas = {
-        kubernetes = "/*.yaml"
-      }
-    }
-  }
+      schemaStore = {
+        -- You must disable built-in schemaStore support if you want to use
+        -- this plugin and its advanced options like `ignore`.
+        enable = false,
+        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+        url = "",
+      },
+      schemas = require('schemastore').yaml.schemas(),
+    },
+  },
 }
 
 -- denols
@@ -93,3 +98,4 @@ lspconfig.denols.setup {
     },
   },
 }
+
