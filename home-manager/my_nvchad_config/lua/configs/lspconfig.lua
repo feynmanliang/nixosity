@@ -37,3 +37,17 @@ lspconfig.nextls.setup {
   on_init = on_init,
   capabilities = capabilities,
 }
+
+-- yamlls
+lspconfig.yamlls.setup {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemas = {
+        kubernetes = "/*.yaml"
+      }
+    }
+  }
+}

@@ -1,4 +1,18 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  tmux-super-fingers = pkgs.tmuxPlugins.mkTmuxPlugin
+    {
+      pluginName = "tmux-super-fingers";
+      version = "unstable-2024-06-13";
+      src = pkgs.fetchFromGitHub {
+        owner = "artemave";
+        repo = "tmux_super_fingers";
+        rev = "6b27a8c7a2a2ed97b8dd38d18cf403b6250c42b9";
+        sha256 = "sha256-cPZCV8xk9QpU49/7H8iGhQYK6JwWjviL29eWabuqruc=";
+      };
+    };
+in 
+{
   programs.tmux = {
     enable = true;
     keyMode = "vi";
@@ -19,6 +33,10 @@
         tmuxPlugins.pain-control
         tmuxPlugins.sensible
         tmuxPlugins.yank
+        {
+          plugin = tmux-super-fingers;
+          extraConfig = "set -g @super-fingers-key f";
+        }
         # needs to be after right status edits, see https://haseebmajid.dev/posts/2023-07-10-setting-up-tmux-with-nix-home-manager/
         {
           plugin = tmuxPlugins.continuum;

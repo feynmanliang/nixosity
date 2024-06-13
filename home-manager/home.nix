@@ -93,6 +93,11 @@
     unzip
     dnsutils
 
+    # for tmux
+    lsof
+    file
+    xdg-utils
+
     # for neovim
     python3
     nodejs

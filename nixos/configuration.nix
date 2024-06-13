@@ -84,6 +84,7 @@
   # configure NixOS-WSL
   wsl.enable = true;
   wsl.defaultUser = "nixos";
+  wsl.interop.register = true;
 
   # for patching vscode-server
   environment.systemPackages = [
