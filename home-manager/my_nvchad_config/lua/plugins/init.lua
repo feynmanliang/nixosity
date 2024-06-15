@@ -98,15 +98,13 @@ return {
     },
   },
 
-  "b0o/schemastore.nvim",
   {
-    -- "agorgl/yaml-companion.nvim",
-    -- branch = "patch-1",
-    dir = "~/code/yaml-companion.nvim",
+    "feynmanliang/yaml-companion.nvim",
+    branch = "crds_with_nvim_0.10",
     requires = {
-        { "neovim/nvim-lspconfig" },
-        { "nvim-lua/plenary.nvim" },
-        { "nvim-telescope/telescope.nvim" },
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
     },
     config = function()
       require("telescope").load_extension("yaml_schema")

@@ -84,7 +84,7 @@ lspconfig.nextls.setup {
 --     },
 --   },
 -- }
-local cfg = require("yaml-companion").setup({
+lspconfig.yamlls.setup(require("yaml-companion").setup({
   log_level = "debug",
 
   -- Built in file matchers
@@ -92,7 +92,7 @@ local cfg = require("yaml-companion").setup({
     -- Detects Kubernetes files based on content
     kubernetes = { enabled = true },
     kubernetes_crd = { enabled = true },
-    cloud_init = { enabled = true }
+    cloud_init = { enabled = true },
   },
 
   -- Additional schemas available in Telescope picker
@@ -108,9 +108,11 @@ local cfg = require("yaml-companion").setup({
     settings = {
       redhat = { telemetry = { enabled = false } },
     },
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
   },
-})
-require("lspconfig")["yamlls"].setup(cfg)
+}))
 
 -- denols
 lspconfig.denols.setup {
