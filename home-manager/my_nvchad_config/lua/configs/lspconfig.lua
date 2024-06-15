@@ -85,8 +85,6 @@ lspconfig.nextls.setup {
 --   },
 -- }
 lspconfig.yamlls.setup(require("yaml-companion").setup({
-  log_level = "debug",
-
   -- Built in file matchers
   builtin_matchers = {
     -- Detects Kubernetes files based on content
