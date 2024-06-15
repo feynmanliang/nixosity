@@ -60,23 +60,57 @@ lspconfig.nextls.setup {
 }
 
 -- yamlls with schemastore
-lspconfig.yamlls.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-  settings = {
-    yaml = {
-      schemaStore = {
-        -- You must disable built-in schemaStore support if you want to use
-        -- this plugin and its advanced options like `ignore`.
-        enable = false,
-        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-        url = "",
-      },
-      schemas = require('schemastore').yaml.schemas(),
+-- lspconfig.yamlls.setup {
+--   on_attach = on_attach,
+--   on_init = on_init,
+--   capabilities = capabilities,
+--   settings = {
+--     yaml = {
+--       schemaStore = {
+--         -- You must disable built-in schemaStore support if you want to use
+--         -- this plugin and its advanced options like `ignore`.
+--         enable = false,
+--         -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+--         url = "",
+--       },
+--       schemas = require('schemastore').yaml.schemas(),
+--       -- schemas = vim.tbl_deep_extend(
+--       --   'error',
+--       --   require('schemastore').yaml.schemas(),
+--       --   {
+--       --     kubernetes = "*.yaml",
+--       --   }
+--       -- )
+--     },
+--   },
+-- }
+local cfg = require("yaml-companion").setup({
+  log_level = "debug",
+
+  -- Built in file matchers
+  builtin_matchers = {
+    -- Detects Kubernetes files based on content
+    kubernetes = { enabled = true },
+    kubernetes_crd = { enabled = true },
+    cloud_init = { enabled = true }
+  },
+
+  -- Additional schemas available in Telescope picker
+  schemas = {
+    {
+      name = "Kubernetes 1.22.4",
+      uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json",
     },
   },
-}
+
+  -- Pass any additional options that will be merged in the final LSP config
+  lspconfig = {
+    settings = {
+      redhat = { telemetry = { enabled = false } },
+    },
+  },
+})
+require("lspconfig")["yamlls"].setup(cfg)
 
 -- denols
 lspconfig.denols.setup {
