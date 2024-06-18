@@ -95,6 +95,16 @@
     package = pkgs.nix-ld-rs;
   };
 
+  # ssh
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = true;
+      PermitRootLogin = "yes";
+      KbdInteractiveAuthentication = true;
+    };
+  };
+
   # docker
   users.users."nixos".extraGroups = [ "docker" ];
   virtualisation.docker = {
@@ -104,6 +114,7 @@
       setSocketVariable = true;
     };
   };
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
