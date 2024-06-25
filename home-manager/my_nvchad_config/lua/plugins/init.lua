@@ -23,7 +23,7 @@ return {
         "lua-language-server", "stylua",
         "html-lsp", "css-lsp" , "prettier",
         "nextls", "terraform-ls", "yaml-language-server",
-        "deno"
+        "deno", "pyright", "typescript-language-server"
       },
     },
   },
@@ -35,7 +35,7 @@ return {
         "vim", "lua", "vimdoc",
         "html", "css", "elixir",
         "heex", "terraform",
-        "tsx"
+        "tsx", "yaml", "python"
       },
     },
   },
