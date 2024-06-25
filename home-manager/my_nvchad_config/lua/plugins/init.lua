@@ -56,6 +56,10 @@ return {
       require("copilot").setup({
         panel = { enabled = false },
         suggestion = { auto_trigger = true },
+        filetypes = {
+          markdown = true,
+          yaml = true,
+        }
       })
     end,
   },
