@@ -5,6 +5,7 @@
 , config
 , pkgs
 , neovim-nightly-overlay
+, username
 , ...
 }: {
   nixpkgs = {
@@ -40,8 +41,8 @@
 
 
   home = {
-    username = "nixos";
-    homeDirectory = "/home/nixos";
+    username = username;
+    homeDirectory = "/home/${username}";
   };
 
   # Add stuff for your user as you see fit:
@@ -49,7 +50,7 @@
     bash = {
       enable = true;
       bashrcExtra = ''
-        export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+        export PATH="$HOME/.nix-profile/bin:$PATH:$HOME/bin:$HOME/.local/bin"
       '';
 
       shellAliases = {

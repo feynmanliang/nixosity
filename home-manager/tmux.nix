@@ -8,7 +8,7 @@ let
         owner = "artemave";
         repo = "tmux_super_fingers";
         rev = "6b27a8c7a2a2ed97b8dd38d18cf403b6250c42b9";
-        sha256 = "sha256-cPZCV8xk9QpU49/7H8iGhQYK6JwWjviL29eWabuqruc=";
+        sha256 = "sha256-lJ6EDJbSj4jhVcG1rLfhTil2fx55S7HhCWkDuhdy5NE=";
       };
     };
 in 
@@ -17,7 +17,7 @@ in
     enable = true;
     keyMode = "vi";
     prefix = "C-a";
-    terminal = "tmux-256color";
+    terminal = "screen-256color";
     historyLimit = 100000;
     plugins = with pkgs;
       [
