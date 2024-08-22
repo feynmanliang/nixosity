@@ -114,4 +114,13 @@ return {
       require("telescope").load_extension("yaml_schema")
     end,
   },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    config = {
+      require("gitsigns").setup {
+        current_line_blame = true,
+      }
+    }
+  }
 }
