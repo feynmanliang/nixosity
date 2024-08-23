@@ -11,4 +11,4 @@ o.foldcolumn = "auto"
 o.foldlevelstart = 1
 o.foldmethod = "expr"
 o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-o.foldtext = require("modules.foldtext")
+-- o.foldtext = require("modules.foldtext")
