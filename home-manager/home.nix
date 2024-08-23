@@ -47,6 +47,11 @@
 
   # Add stuff for your user as you see fit:
   programs = {
+    atuin = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
     bash = {
       enable = true;
       bashrcExtra = ''
