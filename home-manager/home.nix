@@ -44,7 +44,7 @@
     username = username;
     homeDirectory = "/home/${username}";
     sessionVariables = {
-      SSL_CERT_FILE = "~/.nix-portable/ca-bundle.crt";
+      SSL_CERT_FILE = "/home/${username}/.nix-portable/ca-bundle.crt";
     };
   };
 
