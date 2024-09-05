@@ -43,6 +43,9 @@
   home = {
     username = username;
     homeDirectory = "/home/${username}";
+    sessionVariables = {
+      SSL_CERT_FILE = "/home/${username}/.nix-portable/ca-bundle.crt";
+    };
   };
 
   # Add stuff for your user as you see fit:
