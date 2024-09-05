@@ -43,9 +43,6 @@
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    sessionVariables = {
-      SSL_CERT_FILE = "/home/${username}/.nix-portable/ca-bundle.crt";
-    };
   };
 
   # Add stuff for your user as you see fit:
@@ -56,7 +53,7 @@
       settings = {
         auto_sync = true;
         sync_frequency = "5m";
-        sync_addres = "https://atuin.kube.home";
+        sync_address = "https://atuin.kube.home";
         search_mode = "fuzzy";
         enter_accept = false;
       };
