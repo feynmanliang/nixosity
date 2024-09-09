@@ -99,6 +99,9 @@
     nixpkgs-fmt
 
     kubectl
+    kubelogin
+    kubelogin-oidc
+
     ripgrep
     jq
     yq-go
