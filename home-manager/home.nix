@@ -84,6 +84,11 @@
       enable = true;
       userName = "Feynman Liang";
       userEmail = "feynman.liang@gmail.com";
+      extraConfig = {
+        push = {
+          autoSetupRemote = true;
+        };
+      };
     };
 
     k9s.enable = true;
