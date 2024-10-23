@@ -99,6 +99,8 @@
   home.packages = with pkgs; [
     nixpkgs-fmt
 
+    lazygit
+
     kubectl
     kubelogin
     kubelogin-oidc
