@@ -88,10 +88,15 @@
         push = {
           autoSetupRemote = true;
         };
+        merge = {
+          tool = "nvimdiff";
+        };
       };
     };
 
     k9s.enable = true;
+
+    lazygit.enable = true;
 
     starship.enable = true;
 
@@ -103,8 +108,6 @@
 
   home.packages = with pkgs; [
     nixpkgs-fmt
-
-    lazygit
 
     kubectl
     kubelogin
