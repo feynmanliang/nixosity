@@ -114,6 +114,23 @@
     };
   };
 
+  # woodpark.lan cluster CA
+  security.pki.certificates = [
+  ''
+  -----BEGIN CERTIFICATE-----
+  MIIBkjCCATigAwIBAgIQUsfkUhF4WhDFXnovCxMDLjAKBggqhkjOPQQDAjApMQsw
+  CQYDVQQGEwJVUzEaMBgGA1UEAxMRa3ViZS5ob21lIHJvb3QgQ0EwHhcNMjQxMjI4
+  MTY0NzQ5WhcNMjUwMzI4MTY0NzQ5WjApMQswCQYDVQQGEwJVUzEaMBgGA1UEAxMR
+  a3ViZS5ob21lIHJvb3QgQ0EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASMQs82
+  LUtaaMzThOLNEn3zxRqGwrgTAzpNi8M4sFcM6HFnGWYinbDmaf3RQEurqX+xwc8d
+  GQS+UVk+PcTjZyeUo0IwQDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0TAQH/BAUwAwEB
+  /zAdBgNVHQ4EFgQU97yoKLME6u0KrSXYF0uoVKCIyZIwCgYIKoZIzj0EAwIDSAAw
+  RQIgJe0TVvYa1WJWiPC3pViAIeKdowxCzOTThsSeQI9AgBgCIQCPpWrQRW/c95u9
+  Xq/uVC7M0BT8tfwfls8x7MllhpKDRg==
+  -----END CERTIFICATE-----
+  ''
+  ];
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
