@@ -112,6 +112,7 @@
     kubectl
     kubelogin
     kubelogin-oidc
+    kubectx
 
     ripgrep
     jq
@@ -127,6 +128,7 @@
     lsof
     file
     xdg-utils
+    xsel
 
     # for neovim
     python3
