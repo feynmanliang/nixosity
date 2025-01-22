@@ -26,6 +26,26 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
+        nixie = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          system = "x86_64-linux";
+          # > Our main nixos configuration file <
+          modules = [
+            ./nixie/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              # home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.feynman = import ./home-manager/home.nix;
+
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+              home-manager.extraSpecialArgs = {
+                inherit (inputs) nixpkgs neovim-nightly-overlay;
+                username = "feynman";
+              };
+            }
+          ];
+        };
         sextant = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           system = "x86_64-linux";
