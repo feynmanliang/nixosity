@@ -54,7 +54,7 @@
   users.users.feynman = {
     isNormalUser = true;
     description = "feynman";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
   };
 
@@ -82,6 +82,8 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  virtualisation.docker.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
