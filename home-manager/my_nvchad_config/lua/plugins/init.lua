@@ -35,7 +35,8 @@ return {
         "vim", "lua", "vimdoc",
         "html", "css", "elixir",
         "heex", "terraform",
-        "tsx", "yaml", "python"
+        "tsx", "yaml", "python",
+        "json", "toml"
       },
     },
   },

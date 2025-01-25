@@ -16,7 +16,7 @@ for _, lsp in ipairs(servers) do
 end
 
 -- typescript
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_init = on_init,
   capabilities = capabilities,
   -- on_attach = on_attach,
@@ -32,7 +32,7 @@ lspconfig.tsserver.setup {
   root_dir = function (filename, bufnr)
     local denoRootDir = lspconfig.util.root_pattern("deno.json", "deno.json")(filename);
     if denoRootDir then
-      -- print('this seems to be a deno project; returning nil so that tsserver does not attach');
+      -- print('this seems to be a deno project; returning nil so that ts_ls does not attach');
       return nil;
       -- else
       -- print('this seems to be a ts project; return root dir based on package.json')
