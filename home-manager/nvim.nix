@@ -1,10 +1,10 @@
-{ neovim-nightly-overlay, pkgs , ... }: {
+{ pkgs , ... }: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    package = neovim-nightly-overlay.packages.${pkgs.system}.default;
+    package = pkgs.nvchad;
   };
 
   xdg.configFile."nvim/init.lua" = {

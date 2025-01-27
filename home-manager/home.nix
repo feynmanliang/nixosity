@@ -1,10 +1,10 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs
-, lib
+{ lib
 , config
 , pkgs
 , neovim-nightly-overlay
+, nvchad4nix
 , username
 , ...
 }: {
@@ -12,14 +12,10 @@
     # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
-      neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      # neovim-nightly-overlay.overlays.default
+      (final: prev: {
+        nvchad = nvchad4nix.packages."${pkgs.system}".nvchad;
+      })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -35,14 +31,17 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    ./nvim.nix
+    #./nvim.nix
+    nvchad4nix.homeManagerModule
     ./tmux.nix
   ];
 
 
   home = {
     username = username;
-    homeDirectory = "/home/${username}";
+    homeDirectory = if pkgs.stdenv.isDarwin
+      then "/Users/${username}"
+      else "/home/${username}";
     # sessionVariables = {
     #   SSL_CERT_FILE = "/home/${username}/.nix-portable/ca-bundle.crt";
     # };
@@ -97,6 +96,8 @@
     k9s.enable = true;
 
     lazygit.enable = true;
+
+    nvchad.enable = true;
 
     starship.enable = true;
 
