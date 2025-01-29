@@ -65,6 +65,7 @@
       enable = true;
       bashrcExtra = ''
         export PATH="$HOME/.nix-profile/bin:$PATH:$HOME/bin:$HOME/.local/bin"
+        export EDITOR=nvim
       '';
 
       shellAliases = {
