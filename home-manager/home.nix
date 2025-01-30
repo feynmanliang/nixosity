@@ -124,6 +124,7 @@
 
     unzip
     dnsutils
+    ngrok
 
     # for tmux
     lsof
