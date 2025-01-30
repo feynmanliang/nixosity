@@ -134,6 +134,7 @@
     # for neovim
     python3
     nodejs
+    zig
   ];
 
   # Enable home-manager and git
