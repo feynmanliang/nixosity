@@ -1,4 +1,4 @@
-# This is your home-manager configuration file
+# This is your mailgun home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 { inputs
 , lib
@@ -117,6 +117,7 @@
     ripgrep
     jq
     yq-go
+    code-cursor
 
     htop
     btop
