@@ -51,7 +51,7 @@
           system = "x86_64-linux";
           # > Our main nixos configuration file <
           modules = [
-            ./nixos/configuration.nix
+            ./sextant/configuration.nix
             nixos-wsl.nixosModules.wsl
             home-manager.nixosModules.home-manager
             {
