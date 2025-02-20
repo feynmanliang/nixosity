@@ -132,6 +132,7 @@
     file
     xdg-utils
     xsel
+    wl-clipboard
 
     # for neovim
     python3
