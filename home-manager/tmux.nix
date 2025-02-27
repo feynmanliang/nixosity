@@ -19,6 +19,11 @@ in
     prefix = "C-a";
     terminal = "screen-256color";
     historyLimit = 100000;
+    sensibleOnTop = false;
+    extraConfig = ''
+      set -gu default-command
+      set -g default-shell "$SHELL"
+    '';
     plugins = with pkgs;
       [
         tmuxPlugins.better-mouse-mode
