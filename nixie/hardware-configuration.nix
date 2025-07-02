@@ -9,9 +9,12 @@
     ];
 
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "nvidia" ];
+  # If you're running this in a VM with GPU passthrough
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.beta ];
+  virtualisation.docker.daemon.settings.features.cdi = true;
+
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a4243332-6ade-4464-95a9-220590b77868";
@@ -36,4 +39,22 @@
   # networking.interfaces.enp6s18.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  hardware.graphics = {
+    enable = true;
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    open = true;
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "575.51.02";
+      sha256_64bit = "sha256-XZ0N8ISmoAC8p28DrGHk/YN1rJsInJ2dZNL8O+Tuaa0=";
+      sha256_aarch64 = "sha256-NNeQU9sPfH1sq3d5RUq1MWT6+7mTo1SpVfzabYSVMVI=";
+      openSha256 = "sha256-NQg+QDm9Gt+5bapbUO96UFsPnz1hG1dtEwT/g/vKHkw=";
+      settingsSha256 = "sha256-6n9mVkEL39wJj5FB1HBml7TTJhNAhS/j5hqpNGFQE4w=";
+      persistencedSha256 = "sha256-dgmco+clEIY8bedxHC4wp+fH5JavTzyI1BI8BxoeJJI=";
+    };
+  };
+  hardware.nvidia-container-toolkit.enable = true;
 }

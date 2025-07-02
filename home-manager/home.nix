@@ -138,6 +138,11 @@
     python3
     nodejs
     zig
+
+    # global npm
+    corepack_23
+
+    pciutils
   ];
 
   # Enable home-manager and git
