@@ -15,12 +15,12 @@
   # system.configurationRevision = self.rev or self.dirtyRev or null;
 
   # https://github.com/nix-community/home-manager/issues/4026
-  users.users.admin.home = "/Users/admin";
+  users.users.feynman.home = "/Users/feynman";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
 
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "x86_64-darwin";
+  nixpkgs.hostPlatform = "aarch64-darwin";
 }
