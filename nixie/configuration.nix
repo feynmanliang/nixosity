@@ -5,7 +5,35 @@
 { config, pkgs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings = {
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+      # Opinionated: disable global registry
+      flake-registry = "";
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = config.nix.nixPath;
+
+      # configure binary caches from nix community and cachix
+
+      # given the users in this list the right to specify additional substituters via:
+      #    1. `nixConfig.substituters` in `flake.nix`
+      #    2. command line args `--options substituters http://xxx`
+      trusted-users = [ "nixos" ];
+
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        # the default public key of cache.nixos.org, it's built-in, no need to add it here
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        # nix community's cache server public key
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+  };
 
   imports =
     [ # Include the results of the hardware scan.
@@ -18,6 +46,8 @@
 
   # for multi-arch builds
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+
 
   networking.hostName = "nixie"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
