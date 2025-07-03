@@ -63,6 +63,11 @@
         # rules
         yabai -m rule --add app='System Preferences' manage=off
 
+        # https://ghostty.org/docs/help/macos-tiling-wms#yabai
+        yabai -m signal --add app='^Ghostty$' event=window_created action='yabai -m space --layout bsp'
+        yabai -m signal --add app='^Ghostty$' event=window_destroyed action='yabai -m space --layout bsp'
+
+
         # Any other arbitrary config here
       '';
   };
