@@ -76,7 +76,7 @@
         };
       };
       darwinConfigurations = {
-        Lupings-Mac-mini-7337 = nix-darwin.lib.darwinSystem {
+        Lupings-Mac-mini-7396 = nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [ 
             ./darwinnix/configuration.nix 
