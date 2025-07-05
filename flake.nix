@@ -11,9 +11,14 @@
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nvchad4nix = {
+    nvchad-starter = {
+      url = "path:home-manager/my_nvchad_config";
+      flake = false;
+    };
+    nix4nvchad = {
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nvchad-starter.follows = "nvchad-starter";
     };
   };
 
@@ -24,7 +29,7 @@
     , home-manager
     , nix-darwin
     , neovim-nightly-overlay
-    , nvchad4nix
+    , nix4nvchad
     , ...
     } @ inputs:
     let
@@ -47,7 +52,7 @@
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
               home-manager.extraSpecialArgs = {
-                inherit (inputs) nixpkgs nvchad4nix;
+                inherit (inputs) nixpkgs nix4nvchad;
                 username = "feynman";
               };
             }
@@ -76,19 +81,20 @@
         };
       };
       darwinConfigurations = {
-        Lupings-Mac-mini-7396 = nix-darwin.lib.darwinSystem {
+        Lupings-Mac-mini-7841= nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [ 
             ./darwinnix/configuration.nix 
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.users.feynman = import ./home-manager/home.nix;
+            home-manager.darwinModules.home-manager {
+              home-manager = {
+                useUserPackages = true;
+                users.feynman = import ./home-manager/home.nix;
 
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-              home-manager.extraSpecialArgs = {
-                inherit (inputs) nixpkgs nvchad4nix;
-                username = "feynman";
+                # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+                extraSpecialArgs = {
+                  inherit (inputs) nixpkgs nix4nvchad;
+                  username = "feynman";
+                };
               };
             }
           ];

@@ -4,7 +4,7 @@
 , config
 , pkgs
 , neovim-nightly-overlay
-, nvchad4nix
+, nix4nvchad
 , username
 , ...
 }: {
@@ -14,7 +14,7 @@
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
       (final: prev: {
-        nvchad = nvchad4nix.packages."${pkgs.system}".nvchad;
+        nvchad = nix4nvchad.packages."${pkgs.system}".nvchad;
       })
     ];
     # Configure your nixpkgs instance
@@ -31,8 +31,8 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    #./nvim.nix
-    nvchad4nix.homeManagerModule
+    # ./nvim.nix
+    nix4nvchad.homeManagerModule
     ./tmux.nix
   ];
 
