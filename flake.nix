@@ -81,19 +81,43 @@
         };
       };
       darwinConfigurations = {
-        Lupings-Mac-mini-7841= nix-darwin.lib.darwinSystem {
+        admins-MacBook-Pro-3301 = let
+          system = "x86_64-darwin";
+          username = "admin";
+        in nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = { inherit system username; };
+          modules = [ 
+            ./darwinnix/configuration.nix
+            home-manager.darwinModules.home-manager {
+              home-manager = {
+                useUserPackages = true;
+                users.${username} = import ./home-manager/home.nix;
+
+                extraSpecialArgs = {
+                  inherit (inputs) nixpkgs nix4nvchad;
+                  inherit username;
+                };
+              };
+            }
+          ];
+        };
+        Lupings-Mac-mini-7841 = let
           system = "aarch64-darwin";
+          username = "feynman";
+        in nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = { inherit system username; };
           modules = [ 
             ./darwinnix/configuration.nix 
             home-manager.darwinModules.home-manager {
               home-manager = {
                 useUserPackages = true;
-                users.feynman = import ./home-manager/home.nix;
+                users.${username} = import ./home-manager/home.nix;
 
-                # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
                 extraSpecialArgs = {
                   inherit (inputs) nixpkgs nix4nvchad;
-                  username = "feynman";
+                  inherit username;
                 };
               };
             }
