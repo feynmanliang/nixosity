@@ -24,6 +24,11 @@
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = system;
 
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
+  };
+
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
