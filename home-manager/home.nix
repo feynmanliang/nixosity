@@ -1,10 +1,10 @@
 # This is your mailgun home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs
-, lib
+{ lib
 , config
 , pkgs
 , neovim-nightly-overlay
+, nix4nvchad
 , username
 , ...
 }: {
@@ -12,14 +12,10 @@
     # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
-      neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      # neovim-nightly-overlay.overlays.default
+      (final: prev: {
+        nvchad = nix4nvchad.packages."${pkgs.system}".nvchad;
+      })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -35,17 +31,17 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    ./nvim.nix
+    # ./nvim.nix
+    nix4nvchad.homeManagerModule
     ./tmux.nix
   ];
 
 
   home = {
     username = username;
-    homeDirectory = "/home/${username}";
-    # sessionVariables = {
-    #   SSL_CERT_FILE = "/home/${username}/.nix-portable/ca-bundle.crt";
-    # };
+    homeDirectory = if pkgs.stdenv.isDarwin
+      then "/Users/${username}"
+      else "/home/${username}";
   };
 
   # Add stuff for your user as you see fit:
@@ -66,6 +62,7 @@
       enable = true;
       bashrcExtra = ''
         export PATH="$HOME/.nix-profile/bin:$PATH:$HOME/bin:$HOME/.local/bin"
+        export EDITOR=nvim
       '';
 
       shellAliases = {
@@ -98,6 +95,8 @@
 
     lazygit.enable = true;
 
+    nvchad.enable = true;
+
     starship.enable = true;
 
     zoxide = {
@@ -117,7 +116,6 @@
     ripgrep
     jq
     yq-go
-    code-cursor
 
     htop
     btop
