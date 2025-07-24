@@ -15,7 +15,7 @@
   # system.configurationRevision = self.rev or self.dirtyRev or null;
 
   # https://github.com/nix-community/home-manager/issues/4026
-  users.users.admin.home = "/Users/admin";
+  users.users.${username}.home = "/Users/${username}";
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
