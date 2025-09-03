@@ -123,6 +123,28 @@
             }
           ];
         };
+        J3WK3WGTW2 = let
+          system = "aarch64-darwin";
+          username = "feynman";
+        in nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = { inherit system username; };
+          modules = [ 
+            ./darwinnix/configuration.nix 
+            home-manager.darwinModules.home-manager {
+              home-manager = {
+		backupFileExtension = "backup";
+                useUserPackages = true;
+                users.${username} = import ./home-manager/home.nix;
+
+                extraSpecialArgs = {
+                  inherit (inputs) nixpkgs nix4nvchad;
+                  inherit username;
+                };
+              };
+            }
+          ];
+        };
       };
     };
 }

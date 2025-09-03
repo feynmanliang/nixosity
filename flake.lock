@@ -351,15 +351,14 @@
     "nvchad-starter": {
       "flake": false,
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-UzZlMfJnocSO+atJ3v46NErnet27du/S8GfAfsQsiyQ=",
         "path": "home-manager/my_nvchad_config",
         "type": "path"
       },
       "original": {
         "path": "home-manager/my_nvchad_config",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "root": {
       "inputs": {
