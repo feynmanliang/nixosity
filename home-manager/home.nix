@@ -95,7 +95,10 @@
 
     lazygit.enable = true;
 
-    nvchad.enable = true;
+    nvchad = {
+      enable = true;
+      neovim = pkgs.neovim;
+    };
 
     starship.enable = true;
 
@@ -138,7 +141,7 @@
     zig
 
     # global npm
-    corepack_23
+    # corepack_23
 
     pciutils
   ];
