@@ -133,7 +133,7 @@
             ./darwinnix/configuration.nix 
             home-manager.darwinModules.home-manager {
               home-manager = {
-		backupFileExtension = "backup";
+		            backupFileExtension = "backup";
                 useUserPackages = true;
                 users.${username} = import ./home-manager/home.nix;
 

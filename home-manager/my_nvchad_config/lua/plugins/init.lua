@@ -124,6 +124,9 @@ return {
       }
     }
   },
+  {
+    "ruifm/gitlinker.nvim",
+  },
 
   {
     "nvimdev/lspsaga.nvim",
