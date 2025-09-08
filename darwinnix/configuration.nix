@@ -98,13 +98,10 @@
     	ctrl + alt - 0 : yabai -m window --grid 1:1:0:0:1:1
 
     	# Move window
-    	ctrl + alt + shift - e : yabai -m window --display 1; yabai -m display --focus 1
-    	ctrl + alt + shift - d : yabai -m window --display 2; yabai -m display --focus 2
-
-    	ctrl + alt + - f : yabai -m space --focus next
-    	ctrl + alt + - s : yabai -m space --focus prev
-    	ctrl + alt + shift - f : yabai -m window --space next; yabai -m space --focus next
-    	ctrl + alt + shift - s : yabai -m window --space prev; yabai -m space --focus prev
+    	ctrl + alt - e : yabai -m window --display 1; yabai -m display --focus 1
+    	ctrl + alt - d : yabai -m window --display 2; yabai -m display --focus 2
+    	ctrl + alt - f : yabai -m window --space next; yabai -m space --focus next
+    	ctrl + alt - s : yabai -m window --space prev; yabai -m space --focus prev
 
     	# Close current window
     	ctrl + alt - w : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
