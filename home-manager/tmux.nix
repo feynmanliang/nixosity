@@ -33,6 +33,8 @@ in
             set -g @catppuccin_flavour 'frappe'
             set -g @catppuccin_window_tabs_enabled on
             set -g @catppuccin_date_time "%H:%M"
+            set -g @catppuccin_window_current_text "#W"
+            set -g @catppuccin_window_text "#W"
           '';
         }
         tmuxPlugins.pain-control
