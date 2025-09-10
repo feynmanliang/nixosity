@@ -135,7 +135,8 @@
               home-manager = {
 		            backupFileExtension = "backup";
                 useUserPackages = true;
-                users.${username} = import ./home-manager/home.nix;
+                # Use a host-specific Home Manager config for this Mac
+                users.${username} = import ./home-manager/home-openai.nix;
 
                 extraSpecialArgs = {
                   inherit (inputs) nixpkgs nix4nvchad;
