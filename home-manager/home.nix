@@ -77,6 +77,10 @@
       nix-direnv.enable = true;
     };
 
+    gh = {
+      enable = true;
+    };
+
     git = {
       enable = true;
       userName = "Feynman Liang";
@@ -116,6 +120,9 @@
     kubelogin-oidc
     kubectx
 
+    sapling
+    gh
+
     ripgrep
     jq
     yq-go
@@ -148,6 +155,23 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
+
+  # Multiplatform sapling config
+  # macOS: ~/Library/Preferences/sapling/sapling.conf
+  home.file."Library/Preferences/sapling/sapling.conf" = lib.mkIf pkgs.stdenv.isDarwin {
+    text = ''
+      [alias]
+      st = status
+      co = checkout
+      ci = commit
+      lg = log -G
+    '';
+  };
+
+  # Linux: $XDG_CONFIG_HOME/sapling/sapling.conf (or ~/.config/…)
+  # xdg.configFile."sapling/sapling.conf" = lib.mkIf pkgs.stdenv.isLinux {
+  #   text = saplingConf;
+  # };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
