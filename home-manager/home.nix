@@ -160,6 +160,10 @@
   # macOS: ~/Library/Preferences/sapling/sapling.conf
   home.file."Library/Preferences/sapling/sapling.conf" = lib.mkIf pkgs.stdenv.isDarwin {
     text = ''
+      [ui]
+      merge = internal:merge3
+      merge:interactive = internal:merge3
+
       [alias]
       st = status
       co = checkout
