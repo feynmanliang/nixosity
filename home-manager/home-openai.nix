@@ -14,6 +14,9 @@
         if [ -f "$HOME/.bashrc.openai" ]; then
           source "$HOME/.bashrc.openai"
         fi
+        if [ -f "$HOME/.openai-secrets" ]; then
+          source "$HOME/.openai-secrets"
+        fi
       '';
       profileExtra = ''
         # Managed by Home Manager (J3WK3WGTW2)
