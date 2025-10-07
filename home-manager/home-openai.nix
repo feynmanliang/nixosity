@@ -20,9 +20,12 @@
       '';
       profileExtra = ''
         # Managed by Home Manager (J3WK3WGTW2)
-        if [ -f "$HOME/.bash_profile.openai" ]; then
-          source "$HOME/.bash_profile.openai"
-        fi
+        . "$HOME/.local/bin/env"
+        . "$HOME/.cargo/env"
+        # OpenAI shprofile (if customising, comment out to prevent it getting readded)
+        for file in "/Users/feynman/.openai/shprofile"/*; do
+            source "$file"
+        done
       '';
     };
   };
