@@ -3,121 +3,120 @@ local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local lspconfig = require "lspconfig"
+-- Avoid hitting OS file-descriptor limits from LSP file watching.
+capabilities.workspace = capabilities.workspace or {}
+capabilities.workspace.didChangeWatchedFiles = capabilities.workspace.didChangeWatchedFiles or {}
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+
+local ok_watchfiles, watchfiles = pcall(require, "vim.lsp._watchfiles")
+if ok_watchfiles then
+  local orig_watchfunc = watchfiles._watchfunc
+
+  watchfiles._watchfunc = function(path, opts, callback)
+    local ok, cancel_or_err = pcall(orig_watchfunc, path, opts, callback)
+    if ok then
+      return cancel_or_err
+    end
+
+    if type(cancel_or_err) == "string" and cancel_or_err:find "EMFILE" then
+      vim.schedule(function()
+        vim.notify(
+          string.format("LSP file watching disabled for %s (too many open files)", path),
+          vim.log.levels.WARN
+        )
+      end)
+      return function() end
+    end
+
+    error(cancel_or_err)
+  end
+end
+
+local util = require "lspconfig.util"
 local servers = { "html", "cssls", "terraformls", "pyright" }
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+local function with_base_config(config)
+  return vim.tbl_deep_extend("force", {
     on_attach = on_attach,
     on_init = on_init,
     capabilities = capabilities,
-  }
+  }, config or {})
 end
 
--- typescript
-lspconfig.ts_ls.setup {
-  on_init = on_init,
-  capabilities = capabilities,
-  -- on_attach = on_attach,
-  on_attach = function (client, bufnr)
-    on_attach(client, bufnr);
-    vim.keymap.set('n', '<leader>ro', function()
+local function configure(server, config)
+  vim.lsp.config(server, with_base_config(config))
+  return server
+end
+
+local enabled_servers = {}
+
+for _, server in ipairs(servers) do
+  table.insert(enabled_servers, configure(server))
+end
+
+table.insert(enabled_servers, configure("ts_ls", {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    vim.keymap.set("n", "<leader>ro", function()
       vim.lsp.buf.execute_command({
         command = "_typescript.organizeImports",
-        arguments = { vim.fn.expand("%:p") }
+        arguments = { vim.fn.expand "%:p" },
       })
-    end, { buffer = bufnr,  remap = false });
+    end, { buffer = bufnr, remap = false })
   end,
-  root_dir = function (filename, bufnr)
-    local denoRootDir = lspconfig.util.root_pattern("deno.json", "deno.json")(filename);
-    if denoRootDir then
-      -- print('this seems to be a deno project; returning nil so that ts_ls does not attach');
-      return nil;
-      -- else
-      -- print('this seems to be a ts project; return root dir based on package.json')
+  root_dir = function(bufnr, on_dir)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    local deno_root = util.root_pattern("deno.json", "deno.jsonc")(filename)
+    if deno_root then
+      return
     end
 
-    return lspconfig.util.root_pattern("package.json")(filename);
+    local node_root = util.root_pattern("package.json")(filename)
+    if node_root then
+      on_dir(node_root)
+    end
   end,
-  single_file_support = false,
-}
+  workspace_required = true,
+}))
 
--- elixir
-lspconfig.nextls.setup {
+table.insert(enabled_servers, configure("nextls", {
   cmd = { "nextls", "--stdio" },
   init_options = {
     extensions = {
-      credo = { enable = true }
+      credo = { enable = true },
     },
     experimental = {
-      completions = { enable = true }
-    }
+      completions = { enable = true },
+    },
   },
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-}
+}))
 
--- yamlls with schemastore
--- lspconfig.yamlls.setup {
---   on_attach = on_attach,
---   on_init = on_init,
---   capabilities = capabilities,
---   settings = {
---     yaml = {
---       schemaStore = {
---         -- You must disable built-in schemaStore support if you want to use
---         -- this plugin and its advanced options like `ignore`.
---         enable = false,
---         -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
---         url = "",
---       },
---       schemas = require('schemastore').yaml.schemas(),
---       -- schemas = vim.tbl_deep_extend(
---       --   'error',
---       --   require('schemastore').yaml.schemas(),
---       --   {
---       --     kubernetes = "*.yaml",
---       --   }
---       -- )
---     },
---   },
--- }
-lspconfig.yamlls.setup(require("yaml-companion").setup({
-  -- Built in file matchers
+table.insert(enabled_servers, configure("yamlls", require("yaml-companion").setup({
   builtin_matchers = {
-    -- Detects Kubernetes files based on content
     kubernetes = { enabled = true },
     kubernetes_crd = { enabled = true },
     cloud_init = { enabled = true },
   },
-
-  -- Additional schemas available in Telescope picker
   schemas = {
     {
       name = "Kubernetes 1.22.4",
       uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json",
     },
   },
-
-  -- Pass any additional options that will be merged in the final LSP config
   lspconfig = {
     settings = {
       redhat = { telemetry = { enabled = false } },
     },
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
   },
-}))
+})))
 
--- denols
-lspconfig.denols.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+table.insert(enabled_servers, configure("denols", {
+  root_dir = function(bufnr, on_dir)
+    local root = util.root_pattern("deno.json", "deno.jsonc")(vim.api.nvim_buf_get_name(bufnr))
+    if root then
+      on_dir(root)
+    end
+  end,
   init_options = {
     lint = true,
     unstable = true,
@@ -131,5 +130,6 @@ lspconfig.denols.setup {
       },
     },
   },
-}
+}))
 
+vim.lsp.enable(enabled_servers)
