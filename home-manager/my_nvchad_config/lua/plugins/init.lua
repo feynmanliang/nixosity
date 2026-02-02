@@ -1,3 +1,11 @@
+local mason_packages = {
+  "lua-language-server", "stylua",
+  "html-lsp", "css-lsp", "prettier",
+  "nextls", "terraform-ls", "yaml-language-server",
+  "deno", "pyright", "typescript-language-server",
+  "gopls",
+}
+
 return {
   {
     "stevearc/conform.nvim",
@@ -19,12 +27,7 @@ return {
   {
     "williamboman/mason.nvim",
     opts = {
-      ensure_installed = {
-        "lua-language-server", "stylua",
-        "html-lsp", "css-lsp" , "prettier",
-        "nextls", "terraform-ls", "yaml-language-server",
-        "deno", "pyright", "typescript-language-server"
-      },
+      ensure_installed = mason_packages,
     },
   },
 

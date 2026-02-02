@@ -33,7 +33,7 @@ if ok_watchfiles then
 end
 
 local util = require "lspconfig.util"
-local servers = { "html", "cssls", "terraformls", "pyright" }
+local servers = { "html", "cssls", "terraformls", "pyright", "gopls" }
 
 local function with_base_config(config)
   return vim.tbl_deep_extend("force", {
