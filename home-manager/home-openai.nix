@@ -29,5 +29,21 @@
       '';
     };
   };
-}
 
+  home.packages = with pkgs; [
+    jujutsu
+  ];
+
+  home.file.".config/jj/config.toml".text = ''
+    [user]
+    name = "Feynman Liang"
+    email = "feynman@openai.com"
+
+    [ui]
+    default-command = "log"
+
+    [aliases]
+    l = ["log", "-r", "::@"]
+    s = ["status"]
+  '';
+}
