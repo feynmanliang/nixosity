@@ -12,7 +12,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nvchad-starter = {
-      url = "path:home-manager/my_nvchad_config";
+      url = "./home-manager/my_nvchad_config";
       flake = false;
     };
     nix4nvchad = {
