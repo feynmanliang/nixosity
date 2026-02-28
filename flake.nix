@@ -146,6 +146,27 @@
             }
           ];
         };
+        Feynmans-MacBook-Air-10 = let
+          system = "x86_64-darwin";
+          username = "feynman";
+        in nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = { inherit system username; };
+          modules = [ 
+            ./darwinnix/configuration.nix
+            home-manager.darwinModules.home-manager {
+              home-manager = {
+                useUserPackages = true;
+                users.${username} = import ./home-manager/home.nix;
+
+                extraSpecialArgs = {
+                  inherit (inputs) nixpkgs nix4nvchad;
+                  inherit username;
+                };
+              };
+            }
+          ];
+        };
       };
     };
 }
