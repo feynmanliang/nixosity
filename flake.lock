@@ -227,15 +227,14 @@
     "nvchad-starter": {
       "flake": false,
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-JuAeK+3WP6gNIjFO09mY0zDjTJvASkGcDspVqUaINJ8=",
-        "path": "/nix/store/4vhh7x2navgxiyykbllpn5dw0f2mfarx-source/home-manager/my_nvchad_config",
+        "path": "./home-manager/my_nvchad_config",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/4vhh7x2navgxiyykbllpn5dw0f2mfarx-source/home-manager/my_nvchad_config",
+        "path": "./home-manager/my_nvchad_config",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "root": {
       "inputs": {

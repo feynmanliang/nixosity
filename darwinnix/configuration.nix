@@ -7,7 +7,12 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [ 
+    git
     skhd
+  ];
+
+  environment.shells = with pkgs; [
+    bash
   ];
 
   # Necessary for using flakes on this system.
@@ -20,7 +25,12 @@
   # system.configurationRevision = self.rev or self.dirtyRev or null;
 
   # https://github.com/nix-community/home-manager/issues/4026
-  users.users.${username}.home = "/Users/${username}";
+  users.users = {
+    ${username} = {
+      home = "/Users/${username}";
+      shell = "/run/current-system/sw/bin/bash";
+    };
+  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
