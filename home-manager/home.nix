@@ -62,8 +62,18 @@
       enable = true;
       bashrcExtra = ''
         export EDITOR=nvim
-        # Force Nix paths first
-        PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
+
+        path_prepend() {
+          case ":$PATH:" in
+            *":$1:"*) ;;
+            *) PATH="$1:$PATH" ;;
+          esac
+        }
+
+        # Prefer Nix-managed tools without rewriting the rest of PATH.
+        path_prepend "/run/current-system/sw/bin"
+        path_prepend "/etc/profiles/per-user/$USER/bin"
+        path_prepend "$HOME/.nix-profile/bin"
       '';
 
       shellAliases = {

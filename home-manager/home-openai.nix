@@ -9,8 +9,21 @@
     };
 
     bash = {
-      # Append sourcing of the OpenAI-specific bashrc, if present
       bashrcExtra = lib.mkAfter ''
+        # nix-darwin's interactive bash setup resets PATH and drops Homebrew on macOS.
+        # Restore Homebrew while preserving the OpenAI virtualenv and Nix priority.
+        if [ -x /opt/homebrew/bin/brew ]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+
+        if [ -n "''${VIRTUAL_ENV-}" ]; then
+          path_prepend "''${VIRTUAL_ENV}/bin"
+        fi
+
+        path_prepend "/run/current-system/sw/bin"
+        path_prepend "/etc/profiles/per-user/$USER/bin"
+        path_prepend "$HOME/.nix-profile/bin"
+
         if [ -f "$HOME/.bashrc.openai" ]; then
           source "$HOME/.bashrc.openai"
         fi
