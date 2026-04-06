@@ -119,6 +119,9 @@
     	# Rotate tree
     	ctrl + alt - r : yabai -m space --rotate 90
 
+    	# Relayout current space
+    	ctrl + alt - space : yabai -m space --layout bsp
+
     	# Open application
     	ctrl + alt - return : open -a Ghostty
     	ctrl + alt - b : open -a "Brave Browser"
