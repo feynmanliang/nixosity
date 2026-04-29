@@ -39,7 +39,8 @@
 
   home = {
     username = username;
-    homeDirectory = if pkgs.stdenv.isDarwin
+    homeDirectory =
+      if pkgs.stdenv.isDarwin
       then "/Users/${username}"
       else "/home/${username}";
   };
@@ -54,6 +55,11 @@
         sync_frequency = "5m";
         sync_address = "https://atuin.kube.home";
         search_mode = "fuzzy";
+        filter_mode = "global";
+        workspaces = false;
+        history_filter = [ ];
+        cwd_filter = [ ];
+        secrets_filter = false;
         enter_accept = false;
       };
     };
@@ -62,6 +68,8 @@
       enable = true;
       bashrcExtra = ''
         export EDITOR=nvim
+        export HISTCONTROL=
+        export HISTIGNORE=
 
         path_prepend() {
           case ":$PATH:" in

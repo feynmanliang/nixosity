@@ -116,8 +116,8 @@
     	# Close current window
     	ctrl + alt - w : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
-    	# Rotate tree
-    	ctrl + alt - r : yabai -m space --rotate 90
+      # Swap focused window into largest pane
+      ctrl + alt - r : yabai -m window --swap largest
 
     	# Relayout current space
     	ctrl + alt - space : yabai -m space --layout bsp
