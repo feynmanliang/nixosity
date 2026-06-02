@@ -8,9 +8,9 @@
       userEmail = lib.mkForce "feynman@openai.com";
     };
 
-    bash = {
-      bashrcExtra = lib.mkAfter ''
-        # nix-darwin's interactive bash setup resets PATH and drops Homebrew on macOS.
+    zsh = {
+      initContent = lib.mkAfter ''
+        # nix-darwin's interactive zsh setup resets PATH and drops Homebrew on macOS.
         # Restore Homebrew while preserving the OpenAI virtualenv and Nix priority.
         if [ -x /opt/homebrew/bin/brew ]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -24,8 +24,9 @@
         path_prepend "/etc/profiles/per-user/$USER/bin"
         path_prepend "$HOME/.nix-profile/bin"
 
-        if [ -f "$HOME/.bashrc.openai" ]; then
-          source "$HOME/.bashrc.openai"
+        # Home Manager backs up the previous OpenAI-managed zsh config on first switch.
+        if [ -f "$HOME/.zshrc.backup" ]; then
+          source "$HOME/.zshrc.backup"
         fi
         if [ -f "$HOME/.openai-secrets" ]; then
           source "$HOME/.openai-secrets"
@@ -39,6 +40,11 @@
         for file in "/Users/feynman/.openai/shprofile"/*; do
             source "$file"
         done
+
+        # Preserve the previous OpenAI-managed login setup after Home Manager takes over.
+        if [ -f "$HOME/.zprofile.backup" ]; then
+          source "$HOME/.zprofile.backup"
+        fi
       '';
     };
   };

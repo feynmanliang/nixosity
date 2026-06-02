@@ -84,6 +84,9 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
   users.users.feynman = {
     isNormalUser = true;
     description = "feynman";

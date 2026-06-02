@@ -1,5 +1,6 @@
-{ 
-  pkgs
+{
+  lib
+, pkgs
 , username
 , system
 , ... 
@@ -12,13 +13,14 @@
   ];
 
   environment.shells = with pkgs; [
-    bash
+    zsh
   ];
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
 
   # Enable alternative shell support in nix-darwin.
+  programs.zsh.enable = true;
   # programs.fish.enable = true;
 
   # Set Git commit hash for darwin-version.
@@ -28,9 +30,14 @@
   users.users = {
     ${username} = {
       home = "/Users/${username}";
-      shell = "/run/current-system/sw/bin/bash";
+      shell = pkgs.zsh;
     };
   };
+
+  # Keep the existing macOS account pointed at the stable system zsh path.
+  system.activationScripts.postActivation.text = lib.mkAfter ''
+    dscl . -create "/Users/${username}" UserShell /run/current-system/sw/bin/zsh
+  '';
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

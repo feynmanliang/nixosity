@@ -49,7 +49,7 @@
   programs = {
     atuin = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
       settings = {
         auto_sync = true;
         sync_frequency = "5m";
@@ -64,12 +64,10 @@
       };
     };
 
-    bash = {
+    zsh = {
       enable = true;
-      bashrcExtra = ''
+      initContent = ''
         export EDITOR=nvim
-        export HISTCONTROL=
-        export HISTIGNORE=
 
         path_prepend() {
           case ":$PATH:" in
@@ -92,7 +90,7 @@
 
     direnv = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
       nix-direnv.enable = true;
     };
 
@@ -127,12 +125,15 @@
 
     zoxide = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
   };
 
   home.packages = with pkgs; [
     nixpkgs-fmt
+
+    # Keep stale app environments from breaking while zsh becomes the default shell.
+    bashInteractive
 
     kubectl
     kubelogin

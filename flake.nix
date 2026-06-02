@@ -73,7 +73,7 @@
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
               home-manager.extraSpecialArgs = {
-                inherit (inputs) nixpkgs neovim-nightly-overlay;
+                inherit (inputs) nixpkgs neovim-nightly-overlay nix4nvchad;
                 username = "nixos";
               };
             }
