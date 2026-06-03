@@ -68,6 +68,7 @@
       enable = true;
       initContent = ''
         export EDITOR=nvim
+        export CLICOLOR=1
 
         path_prepend() {
           case ":$PATH:" in
