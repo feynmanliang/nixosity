@@ -126,11 +126,24 @@
         J3WK3WGTW2 = let
           system = "aarch64-darwin";
           username = "feynman";
+          dependencyCooldownHook = ''
+            # >>> OPENAI DEPENDENCY-COOLDOWN - ENV HOOK >>>
+            # Security related dependency cooldown setting. Visit go/dependency-cooldowns for more details.
+            # Source OpenAI dependency cooldown defaults when available.
+            if [ -r "/etc/openai/dependency-cooldown.env" ]; then
+              . "/etc/openai/dependency-cooldown.env"
+            fi
+            # <<< OPENAI DEPENDENCY-COOLDOWN - ENV HOOK <<<
+          '';
         in nix-darwin.lib.darwinSystem {
           inherit system;
           specialArgs = { inherit system username; };
           modules = [ 
             ./darwinnix/configuration.nix 
+            {
+              environment.interactiveShellInit = dependencyCooldownHook;
+              programs.zsh.loginShellInit = dependencyCooldownHook;
+            }
             home-manager.darwinModules.home-manager {
               home-manager = {
 		            backupFileExtension = "backup";

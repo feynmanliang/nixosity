@@ -1,4 +1,12 @@
 { config, lib, pkgs, username, ... }:
+let
+  openaiShellHook = kind: ''
+    # OpenAI ${kind} (if customising, comment out to prevent it getting readded)
+    for file in "$HOME/.openai/${kind}"/*; do
+      source "$file"
+    done
+  '';
+in
 {
   # Reuse the base home configuration, then override host-specific bits.
   imports = [ ./home.nix ];
@@ -31,20 +39,15 @@
         if [ -f "$HOME/.openai-secrets" ]; then
           source "$HOME/.openai-secrets"
         fi
+
+        ${openaiShellHook "shrc"}
       '';
       profileExtra = ''
         # Managed by Home Manager (J3WK3WGTW2)
         . "$HOME/.local/bin/env"
         . "$HOME/.cargo/env"
-        # OpenAI shprofile (if customising, comment out to prevent it getting readded)
-        for file in "/Users/feynman/.openai/shprofile"/*; do
-            source "$file"
-        done
 
-        # Preserve the previous OpenAI-managed login setup after Home Manager takes over.
-        if [ -f "$HOME/.zprofile.backup" ]; then
-          source "$HOME/.zprofile.backup"
-        fi
+        ${openaiShellHook "shprofile"}
       '';
     };
   };

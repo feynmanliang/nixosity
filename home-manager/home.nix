@@ -84,8 +84,9 @@
       '';
 
       shellAliases = {
-        k = "kubectl";
         gbdm = "git branch --merged | grep -Ev \"(^\\*|master|main|dev)\" | xargs git branch -d";
+        ls = "ls --color=auto";
+        k = "kubectl";
       };
     };
 
